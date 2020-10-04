@@ -48,7 +48,7 @@ export default {
 		plugins: [
 			replace({
 				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode),
+				'process.dev': dev,
 			}),
 			alias,
 			svelte({
@@ -62,7 +62,7 @@ export default {
 				dedupe: ['svelte'],
 			}),
 			commonjs(),
-			typescript({ noEmitOnError: false }),
+			typescript(),
 			json(),
 
 			legacy &&
@@ -71,7 +71,10 @@ export default {
 					babelHelpers: 'runtime',
 					exclude: ['node_modules/@babel/**'],
 					presets: [['@babel/preset-env', { targets: '> 0.25%, not dead' }]],
-					plugins: ['@babel/plugin-syntax-dynamic-import', ['@babel/plugin-transform-runtime', { useESModules: true }]],
+					plugins: [
+						'@babel/plugin-syntax-dynamic-import',
+						['@babel/plugin-transform-runtime', { useESModules: true }],
+					],
 				}),
 
 			!dev && terser({ module: true }),
@@ -87,7 +90,7 @@ export default {
 		plugins: [
 			replace({
 				'process.browser': false,
-				'process.env.NODE_ENV': JSON.stringify(mode),
+				'process.dev': dev,
 			}),
 			alias,
 			svelte({
@@ -98,7 +101,7 @@ export default {
 			}),
 			resolve({ dedupe: ['svelte'] }),
 			commonjs(),
-			typescript({ noEmitOnError: false }),
+			typescript(),
 			json(),
 		],
 	},
@@ -112,7 +115,7 @@ export default {
 			resolve(),
 			replace({
 				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode),
+				'process.dev': dev,
 			}),
 			commonjs(),
 			!dev && terser(),
