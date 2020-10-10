@@ -33,6 +33,8 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/runtime": "^7.11.2",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@ignatiusmb/aqua": "^20.3.1",
     "@ignatiusmb/elements": "0.7.0",
     "@rollup/plugin-alias": "^3.1.1",
@@ -68,13 +70,19 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
     "*.{svelte,js,ts}": [
       "prettier -w",
       "eslint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
   }
 }
