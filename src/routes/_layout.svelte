@@ -8,7 +8,7 @@
 
 	import { mobile } from '../stores';
 	let innerWidth;
-	$: $mobile = innerWidth < 600;
+	$: $mobile = innerWidth < 600; // eslint-disable-line no-unused-vars
 </script>
 
 <svelte:window bind:innerWidth />
