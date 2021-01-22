@@ -12,9 +12,11 @@ import { terser } from 'rollup-plugin-terser';
 
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import 'dotenv/config';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
+const sourcemap = dev ? 'inline' : false;
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) =>
@@ -25,13 +27,13 @@ const onwarn = (warning, onwarn) =>
 const rootPath = require('path').resolve(__dirname, 'src');
 const alias = aliasFactory({
 	entries: [
-		{ find: '@app', replacement: `${rootPath}/` },
-		{ find: '@components', replacement: `${rootPath}/components` },
-		{ find: '@pages', replacement: `${rootPath}/pages` },
-		{ find: '@styles', replacement: `${rootPath}/styles` },
-		{ find: '@utils', replacement: `${rootPath}/utils` },
+		{ find: '$components', replacement: `${rootPath}/components` },
+		{ find: '$pages', replacement: `${rootPath}/pages` },
+		{ find: '$styles', replacement: `${rootPath}/styles` },
+		{ find: '$utils', replacement: `${rootPath}/utils` },
 	],
 });
+
 const preprocess = [
 	autoPreprocess({
 		postcss: { plugins: [require('autoprefixer')()] },
@@ -42,7 +44,7 @@ const preprocess = [
 export default {
 	client: {
 		input: config.client.input(),
-		output: config.client.output(),
+		output: { ...config.client.output(), sourcemap },
 		preserveEntrySignatures: false,
 		onwarn,
 		plugins: [
@@ -50,20 +52,25 @@ export default {
 				'process.browser': true,
 				'process.dev': dev,
 			}),
-			alias,
 			svelte({
 				preprocess,
-				dev,
-				hydratable: true,
 				emitCss: true,
+				compilerOptions: {
+					dev,
+					hydratable: true,
+				},
 			}),
 			resolve({
 				browser: true,
 				dedupe: ['svelte'],
 			}),
-			commonjs(),
-			typescript(),
+			commonjs({ sourceMap: !!sourcemap }),
+			typescript({
+				sourceMap: !!sourcemap,
+				inlineSources: !!sourcemap,
+			}),
 			json(),
+			alias,
 
 			legacy &&
 				babel({
@@ -83,7 +90,7 @@ export default {
 
 	server: {
 		input: config.server.input(),
-		output: config.server.output(),
+		output: { ...config.server.output(), sourcemap },
 		preserveEntrySignatures: 'strict',
 		external: Object.keys(pkg.dependencies).concat(require('module').builtinModules),
 		onwarn,
@@ -92,33 +99,22 @@ export default {
 				'process.browser': false,
 				'process.dev': dev,
 			}),
-			alias,
 			svelte({
 				preprocess,
-				dev,
-				hydratable: true,
-				generate: 'ssr',
+				compilerOptions: {
+					dev,
+					hydratable: true,
+					generate: 'ssr',
+				},
 			}),
 			resolve({ dedupe: ['svelte'] }),
-			commonjs(),
-			typescript(),
-			json(),
-		],
-	},
-
-	serviceworker: {
-		input: config.serviceworker.input(),
-		output: config.serviceworker.output(),
-		preserveEntrySignatures: false,
-		onwarn,
-		plugins: [
-			resolve(),
-			replace({
-				'process.browser': true,
-				'process.dev': dev,
+			commonjs({ sourceMap: !!sourcemap }),
+			typescript({
+				sourceMap: !!sourcemap,
+				inlineSources: !!sourcemap,
 			}),
-			commonjs(),
-			!dev && terser(),
+			json(),
+			alias,
 		],
 	},
 };

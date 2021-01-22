@@ -1,9 +1,9 @@
-package-lock.json
 yarn-error.log
 .DS_Store
+.env
 *secret.*
 
-**/node_modules/
+/node_modules/
 /src/node_modules/@sapper/
 /coverage/
 /cypress/screenshots/

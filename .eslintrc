@@ -1,5 +1,6 @@
 {
 	"extends": ["eslint:recommended"],
+	"plugins": ["svelte3"],
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module"
@@ -9,12 +10,20 @@
 		"browser": true,
 		"node": true
 	},
-	"plugins": ["svelte3"],
 	"ignorePatterns": ["public/build"],
 	"overrides": [
 		{
 			"files": ["**/*.svelte"],
 			"processor": "svelte3/svelte3"
+		},
+		{
+			"files": ["**/*.ts"],
+			"parser": "@typescript-eslint/parser",
+			"plugins": ["@typescript-eslint"],
+			"extends": [
+				"plugin:@typescript-eslint/eslint-recommended",
+				"plugin:@typescript-eslint/recommended"
+			]
 		}
 	]
 }
