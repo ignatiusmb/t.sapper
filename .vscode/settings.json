@@ -1,5 +1,7 @@
 {
 	"editor.formatOnSave": true,
+	"svelte.plugin.css.completions.emmet": false,
+	"svelte.plugin.typescript.semanticTokens.enable": false,
 	"[svelte]": {
 		"editor.defaultFormatter": "svelte.svelte-vscode"
 	}
