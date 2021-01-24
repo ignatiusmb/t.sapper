@@ -1,6 +1,7 @@
 {
 	"recommendations": [
 		"svelte.svelte-vscode",
-		"fivethree.vscode-svelte-snippets"
+		"fivethree.vscode-svelte-snippets",
+		"esbenp.prettier-vscode"
 	]
 }
