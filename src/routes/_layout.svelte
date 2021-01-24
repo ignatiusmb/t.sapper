@@ -1,14 +1,14 @@
 <script>
-	import { ScrollTop } from '@ignatiusmb/elements';
-	import Navigation from '../components/Navigation.svelte';
-	import Footer from '../components/Footer.svelte';
+	import { ScrollTop } from 'svelement';
+	import Navigation from '$components/Navigation.svelte';
+	import Footer from '$components/Footer.svelte';
 
 	import '@ignatiusmb/aqua/lib/aqua.min.css';
-	import '../styles/fonts.css';
+	import '$styles/fonts.css';
 
-	import { mobile } from '../stores';
-	let innerWidth;
-	$: $mobile = innerWidth < 600; // eslint-disable-line no-unused-vars
+	import { mobile } from '$utils/stores';
+	let innerWidth: number;
+	$: mobile.set(innerWidth < 600);
 </script>
 
 <svelte:window bind:innerWidth />
