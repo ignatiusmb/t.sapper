@@ -5,13 +5,8 @@
 
 	import '@ignatiusmb/aqua/lib/aqua.min.css';
 	import '$styles/fonts.css';
-
-	import { mobile } from '$utils/stores';
-	let innerWidth;
-	$: mobile.set(innerWidth < 600);
 </script>
 
-<svelte:window bind:innerWidth />
 <ScrollTop />
 
 <Navigation />
