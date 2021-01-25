@@ -7,7 +7,7 @@
 	import '$styles/fonts.css';
 
 	import { mobile } from '$utils/stores';
-	let innerWidth: number;
+	let innerWidth;
 	$: mobile.set(innerWidth < 600);
 </script>
 

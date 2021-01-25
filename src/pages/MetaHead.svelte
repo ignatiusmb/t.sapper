@@ -1,8 +1,8 @@
 <script>
-	export let title: string;
+	export let title;
 	export let canonical = '';
 	export let description = '';
-	export let post: undefined | { tags?: string[]; [key: string]: any } = undefined;
+	export let post = undefined;
 
 	const hostTitle = 'SapperApp';
 	const hostname = 'sapper.app';

@@ -9,8 +9,8 @@
 	import { mobile } from '$utils/stores';
 
 	let opened = false;
-	let scrolled: number;
-	$: path = $page.path.split('/')[1];
+	let scrolled;
+	$: [, path] = $page.path.split('/');
 	$: opened = $preloading ? false : opened;
 	$: scrolled = $mobile ? 1 : scrolled;
 </script>
