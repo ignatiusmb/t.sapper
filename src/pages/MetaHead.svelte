@@ -2,8 +2,7 @@
 	export let title;
 	export let canonical = '';
 	export let description = '';
-	export let post = null;
-	export let social = {};
+	export let post = undefined;
 
 	const hostTitle = 'SapperApp';
 	const hostname = 'sapper.app';
@@ -50,20 +49,6 @@
 				{/if}
 				<meta property="article:tag" content={tag} />
 			{/each}
-		{/if}
-
-		{#if social.twitter}
-			<meta name="generator" content="Ignatius on Svelte + Sapper!" />
-			<meta name="twitter:card" content="summary" />
-			<meta name="twitter:site" content="@ignatiusmbs" />
-			<meta name="twitter:creator" content="@ignatiusmbs" />
-			{#if url}
-				<meta name="twitter:url" content={url} />
-			{/if}
-			<meta name="twitter:title" content={post.title} />
-			{#if post.description}
-				<meta name="twitter:description" content={post.description} />
-			{/if}
 		{/if}
 	{/if}
 

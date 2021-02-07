@@ -1,19 +1,18 @@
 <script>
-	export let mobile;
-	export let scrolled = false;
-
 	import { stores } from '@sapper/app';
 	const { preloading, page } = stores();
 	const sections = ['about', 'posts'];
 
-	import { Icons, ThemeSwitcher } from '@ignatiusmb/elements';
+	import { Feather } from 'svelement/icons';
+	import { ThemeSwitcher } from 'svelement';
 	import NavLink from './NavLink.svelte';
-	import NavGrid from './NavGrid.svelte';
+	import { mobile } from '$utils/stores';
 
 	let opened = false;
-	$: path = $page.path.split('/')[1];
+	let scrolled;
+	$: [, path] = $page.path.split('/');
 	$: opened = $preloading ? false : opened;
-	$: scrolled = mobile ? true : scrolled;
+	$: scrolled = $mobile ? 1 : scrolled;
 </script>
 
 <svelte:window bind:scrollY={scrolled} />
@@ -22,30 +21,26 @@
 	{#if mobile}
 		<span on:click={() => (opened = !opened)}>
 			{#if opened}
-				<Icons.X />
+				<Feather.X />
 			{:else}
-				<Icons.Menu />
+				<Feather.Menu />
 			{/if}
 		</span>
 	{/if}
 
 	<NavLink>
-		<img src="favicon.ico" alt="SapperApp" width="24" />
+		<img src="favicon.png" alt="SapperApp" width="24" />
 	</NavLink>
 
-	{#if !mobile || opened}
-		<NavGrid {mobile}>
-			{#each sections as to}
-				<NavLink {path} {to} hover>{to}</NavLink>
-			{/each}
-		</NavGrid>
-	{/if}
+	{#each sections as to}
+		<NavLink {path} {to} hover>{to}</NavLink>
+	{/each}
 
 	<ThemeSwitcher let:current>
 		{#if current === 'light'}
-			<Icons.Sun />
+			<Feather.Sun />
 		{:else if current === 'dark'}
-			<Icons.Moon />
+			<Feather.Moon />
 		{/if}
 	</ThemeSwitcher>
 </nav>

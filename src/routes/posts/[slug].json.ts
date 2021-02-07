@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-export function get(req: Request, res: Response) {
+export async function get(req: Request, res: Response): Promise<void> {
 	const { slug } = req.params;
 
 	res.writeHead(200, { 'Content-Type': 'application/json' });

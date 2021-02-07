@@ -1,4 +1,5 @@
 {
+	"extends": "@tsconfig/svelte/tsconfig.json",
 	"compilerOptions": {
 		"target": "ES2020",
 		"lib": ["DOM", "ES2020", "WebWorker"],
@@ -8,11 +9,19 @@
 		"importsNotUsedAsValues": "error",
 		"isolatedModules": true,
 		"moduleResolution": "Node",
+		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
 		"types": ["svelte"],
-		"typeRoots": ["src/typings"]
+		"typeRoots": ["src/typings"],
+		"baseUrl": "src",
+		"paths": {
+			"$components/*": ["components/*"],
+			"$pages/*": ["pages/*"],
+			"$styles/*": ["styles/*"],
+			"$utils/*": ["utils/*"]
+		}
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "src/node_modules/**/*"],
 	"exclude": ["node_modules/*", "__sapper__/*", "static/*"]
 }
